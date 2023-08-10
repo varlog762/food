@@ -31,17 +31,17 @@ const plugins = () => {
         // Копирует указанные ассеты из src в dist без обработки.
         new CopyWebpackPlugin({
             patterns: [{
-                    from: 'assets/icons/*.ico',
-                    to: 'assets/icons/[name][ext]',
+                    from: 'icons/*.svg',
+                    to: 'icons/[name][ext]',
                 },
                 {
-                    from: 'assets/audio/*.ogg',
-                    to: 'assets/audio/[name][ext]',
+                    from: 'img/[name]/*.jpg',
+                    to: 'img/[name]/[name][ext]',
                 }
             ]
         }),
         new MiniCssExtractPlugin({
-            filename: 'assets/css/styles.css',
+            filename: 'css/styles.css',
         })
     ];
     
@@ -75,7 +75,7 @@ module.exports = {
     // context - говорит вебпаку, что все исходники лежат в папке src (src нужно удалить из остальных путей).
     context: path.resolve(__dirname, 'src'),
     mode: 'development',
-    entry: './assets/js/script.js',
+    entry: './js/main.js',
     // Если в приложении присутствует несколько скриптов (чанков) в разных точках
     // (например script.js в body и analytics.js в head)
     // {
@@ -136,13 +136,13 @@ module.exports = {
             //         },
             //     }, ],
             // },
-            {
-                test: /\.png$/,
-                type: 'asset/resource',
-                generator: {
-                    filename: 'assets/images/[name][ext]',
-                },
-            },
+            // {
+            //     test: /\.png$/,
+            //     type: 'asset/resource',
+            //     generator: {
+            //         filename: 'assets/images/[name][ext]',
+            //     },
+            // },
             // Обработка .xml, если нужно просто скопировать файлы в dist и сохранить ссылки на них.
             // Так же необходиом импортнуть .xml файл в entry (т.е. script.js и т.п.).
             // {
