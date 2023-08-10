@@ -1,11 +1,11 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-return-assign */
 export function hideTabContenet(collection) {
-  collection.forEach((item) => item.style.display = 'none');
+  collection.forEach((item) => item.classList.remove('tabcontent_active'));
 }
 
 export function showTabContent(collection, idx = 0) {
-  collection[idx].style.display = 'block';
+  collection[idx].classList.add('tabcontent_active');
 }
 
 export function removeTabActive(collection) {

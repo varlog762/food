@@ -12,15 +12,17 @@ document.addEventListener('DOMContentLoaded', () => {
   const tabsContent = tabContainer.querySelectorAll('.tabcontent');
 
   hideTabContenet(tabsContent);
-  showTabContent(tabsContent, 0);
-  addTabActive(tabHeadersCollection, 0);
+  showTabContent(tabsContent);
+  addTabActive(tabHeadersCollection);
 
   document.addEventListener('click', (event) => {
-    if (event.target.closest('.tabheader__item')) {
+    const { target } = event;
+
+    if (target && target.classList.contains('tabheader__item')) {
       removeTabActive(tabHeadersCollection);
       event.target.classList.add('tabheader__item_active');
       hideTabContenet(tabsContent);
-      showTabContent(tabsContent, tabHeadersCollection.indexOf(event.target));
+      showTabContent(tabsContent, tabHeadersCollection.indexOf(target));
     }
   });
 });
