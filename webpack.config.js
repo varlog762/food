@@ -35,9 +35,9 @@ const plugins = () => {
                     to: 'icons/[name][ext]',
                 },
                 {
-                    from: 'img/[name]/*.jpg',
-                    to: 'img/[name]/[name][ext]',
-                }
+                    from: 'img/*/*.jpg',
+                    to: 'img/[name][ext]',
+                },
             ]
         }),
         new MiniCssExtractPlugin({
