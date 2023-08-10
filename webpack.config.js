@@ -35,8 +35,12 @@ const plugins = () => {
                     to: 'icons/[name][ext]',
                 },
                 {
-                    from: 'img/*/*.jpg',
-                    to: 'img/[name][ext]',
+                    from: 'img/slider/*.jpg',
+                    to: 'img/slider/[name][ext]',
+                },
+                {
+                    from: 'img/tabs/*.jpg',
+                    to: 'img/tabs/[name][ext]',
                 },
             ]
         }),
