@@ -50,6 +50,17 @@
 .tabcontent_active {
     display: block;    
 }
+@keyframes tabAnimation {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+.tabcontent_animation {
+    animation: tabAnimation .5s ease 1;
+}
 .tabheader {
     width: 280px;
     padding: 35px 30px;
