@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-expressions */
+/* eslint-disable no-use-before-define */
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-return-assign */
 export function hideTabContenet(collection) {
@@ -36,8 +38,22 @@ export function getTimeRemaning(deadLine) {
 
 export function setClock(selector, deadLine) {
   const timer = document.querySelector(selector);
-  const daysElem = document.querySelector('#days');
-  const hoursElem = document.querySelector('#hours');
-  const minutesElem = document.querySelector('#minutes');
-  const secondsElem = document.querySelector('#seconds');
+  const daysElem = timer.querySelector('#days');
+  const hoursElem = timer.querySelector('#hours');
+  const minutesElem = timer.querySelector('#minutes');
+  const secondsElem = timer.querySelector('#seconds');
+
+  updateClock();
+  const timeInterval = setInterval(updateClock, 1000);
+
+  function updateClock() {
+    const t = getTimeRemaning(deadLine);
+
+    daysElem.innerHTML = t.days;
+    hoursElem.innerHTML = t.hours;
+    minutesElem.innerHTML = t.minutes;
+    secondsElem.innerHTML = t.seconds;
+
+    (t.total <= 0) ? clearInterval(timeInterval) : null;
+  }
 }
