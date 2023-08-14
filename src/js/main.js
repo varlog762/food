@@ -4,6 +4,7 @@ import {
   showTabContent,
   removeTabActive,
   addTabActive,
+  getTimeRemaning,
 } from './utils';
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -25,4 +26,10 @@ document.addEventListener('DOMContentLoaded', () => {
       showTabContent(tabsContent, tabHeadersCollection.indexOf(target));
     }
   });
+
+  // Timer
+
+  const deadLine = '2023-08-31';
+
+  console.log(getTimeRemaning(deadLine));
 });
