@@ -36,6 +36,10 @@ export function getTimeRemaning(deadLine) {
   };
 }
 
+function getZero(num) {
+  return (num >= 0 && num < 10) ? `0${num}` : num;
+}
+
 export function setClock(selector, deadLine) {
   const timer = document.querySelector(selector);
   const daysElem = timer.querySelector('#days');
@@ -49,10 +53,10 @@ export function setClock(selector, deadLine) {
   function updateClock() {
     const t = getTimeRemaning(deadLine);
 
-    daysElem.innerHTML = t.days;
-    hoursElem.innerHTML = t.hours;
-    minutesElem.innerHTML = t.minutes;
-    secondsElem.innerHTML = t.seconds;
+    daysElem.innerHTML = getZero(t.days);
+    hoursElem.innerHTML = getZero(t.hours);
+    minutesElem.innerHTML = getZero(t.minutes);
+    secondsElem.innerHTML = getZero(t.seconds);
 
     (t.total <= 0) ? clearInterval(timeInterval) : null;
   }
