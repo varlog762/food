@@ -61,3 +61,13 @@ export function setClock(selector, deadLine) {
     (t.total <= 0) ? clearInterval(timeInterval) : null;
   }
 }
+
+export function showModal(element, selector) {
+  element.classList.add(selector);
+  document.body.style.overflow = 'hidden';
+}
+
+export function hideModal(element, selector) {
+  element.classList.remove(selector);
+  document.body.style.overflow = '';
+}

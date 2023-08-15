@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 import '../scss/style.scss';
 import {
   hideTabContenet,
@@ -5,6 +6,8 @@ import {
   removeTabActive,
   addTabActive,
   setClock,
+  showModal,
+  hideModal,
 } from './utils';
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -13,8 +16,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const tabHeadersCollection = Array.from(tabContainer.querySelectorAll('.tabheader__item'));
   const tabsContent = tabContainer.querySelectorAll('.tabcontent');
   // Modal elements:
-  const showModalBtns = Array.from(document.querySelectorAll('[data-modal]'));
   const modal = document.querySelector('.modal');
+  const showModalTimerInt = setTimeout(showModal, 15000, modal, 'modal_visible');
 
   hideTabContenet(tabsContent);
   showTabContent(tabsContent);
@@ -28,18 +31,27 @@ document.addEventListener('DOMContentLoaded', () => {
       event.target.classList.add('tabheader__item_active');
       hideTabContenet(tabsContent);
       showTabContent(tabsContent, tabHeadersCollection.indexOf(target));
-    } else if (target && showModalBtns.includes(target)) {
-      modal.classList.add('modal_visible');
-    } else if (target && (target === modal || target.closest('.modal__close'))) {
-      modal.classList.remove('modal_visible');
+    } else if (target && target.closest('[data-modal]')) {
+      showModal(modal, 'modal_visible');
+      clearTimeout(showModalTimerInt);
+    } else if (target && (target === modal || target.closest('[data-modal-close]'))) {
+      hideModal(modal, 'modal_visible');
     }
   });
 
-  // Timer
+  // Timer:
   // const now = new Date();
   // const deadLineMS = now.getTime() + 864000000;
   // const deadLine = new Date(deadLineMS);
   const deadLine = new Date('2023-08-31T06:00:00.000Z');
 
   setClock('.timer', deadLine);
+
+  // Modal:
+
+  document.addEventListener('keyup', (event) => {
+    if (modal.classList.contains('modal_visible') && event.code === 'Escape') {
+      hideModal(modal, 'modal_visible');
+    }
+  });
 });
