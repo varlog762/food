@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable no-unused-expressions */
 import '../scss/style.scss';
 import {
@@ -18,6 +19,13 @@ document.addEventListener('DOMContentLoaded', () => {
   // Modal elements:
   const modal = document.querySelector('.modal');
   const showModalTimerInt = setTimeout(showModal, 15000, modal, 'modal_visible');
+  const showModalOnScroll = () => {
+    if (window.pageYOffset + document.documentElement.clientHeight >= document.documentElement.scrollHeight) {
+      showModal(modal, 'modal_visible');
+      window.removeEventListener('scroll', showModalOnScroll);
+      clearTimeout(showModalTimerInt);
+    }
+  };
 
   hideTabContenet(tabsContent);
   showTabContent(tabsContent);
@@ -34,6 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
     } else if (target && target.closest('[data-modal]')) {
       showModal(modal, 'modal_visible');
       clearTimeout(showModalTimerInt);
+      window.removeEventListener('scroll', showModalOnScroll);
     } else if (target && (target === modal || target.closest('[data-modal-close]'))) {
       hideModal(modal, 'modal_visible');
     }
@@ -54,4 +63,6 @@ document.addEventListener('DOMContentLoaded', () => {
       hideModal(modal, 'modal_visible');
     }
   });
+
+  window.addEventListener('scroll', showModalOnScroll);
 });
