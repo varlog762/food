@@ -95,7 +95,7 @@ module.exports = {
     // Необходимо установить webpack-dev-server.
     devServer: {
         port: 8080,
-        hot: isDev
+        hot: isDev,
     },
     devtool: isDev ? 'source-map' : false,
     plugins: plugins(),
@@ -104,12 +104,12 @@ module.exports = {
             {
                 test: /\.js$/,
                 exclude: /node_modules/,
-                use: 'babel-loader'
+                use: 'babel-loader',
             },
             {
                 test: /\.ts$/,
                 exclude: /node_modules/,
-                use: 'babel-loader'
+                use: 'babel-loader',
             },
             {
                 // Как только Вебпак встречает .css, то он должен использовать лоудер указанный в use.

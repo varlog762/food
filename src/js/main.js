@@ -10,6 +10,7 @@ import {
   showModal,
   hideModal,
 } from './utils';
+import PlanCard from './PlanCard';
 
 document.addEventListener('DOMContentLoaded', () => {
   // Tabs elements:
@@ -26,7 +27,6 @@ document.addEventListener('DOMContentLoaded', () => {
       clearTimeout(showModalTimerInt);
     }
   };
-
   hideTabContenet(tabsContent);
   showTabContent(tabsContent);
   addTabActive(tabHeadersCollection);
@@ -53,7 +53,6 @@ document.addEventListener('DOMContentLoaded', () => {
   // const deadLineMS = now.getTime() + 864000000;
   // const deadLine = new Date(deadLineMS);
   const deadLine = new Date('2023-08-31T06:00:00.000Z');
-
   setClock('.timer', deadLine);
 
   // Modal:
@@ -65,4 +64,17 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   window.addEventListener('scroll', showModalOnScroll);
+
+  // Plan cards:
+
+  const planCardsContainer = document.querySelector('.menu__field').firstElementChild;
+
+  const vegyPlan = new PlanCard('vegy.jpg', 'vegy', 'Меню "Фитнес"', 'Меню "Фитнес" - это новый подход к приготовлению блюд: больше свежих овощей и фруктов. Продукт активных и здоровых людей. Это абсолютно новый продукт с оптимальной ценой и высоким качеством!', 7);
+  vegyPlan.insertCardElementToPage(planCardsContainer);
+
+  const elitePlan = new PlanCard('elite.jpg', 'elite', 'Меню "Премиум"', 'В меню “Премиум” мы используем не только красивый дизайн упаковки, но и качественное исполнение блюд. Красная рыба, морепродукты, фрукты - ресторанное меню без похода в ресторан!<br><br>', 17);
+  elitePlan.insertCardElementToPage(planCardsContainer);
+
+  const postPlan = new PlanCard('post.jpg', 'post', 'Меню "Постное"', 'Постное” - это тщательный подбор ингредиентов: полное отсутствие продуктов животного происхождения, молоко из миндаля, овса, кокоса или гречки, правильное количество белков за счет тофу и импортных вегетарианских стейков.', 15);
+  postPlan.insertCardElementToPage(planCardsContainer);
 });
