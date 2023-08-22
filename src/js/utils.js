@@ -71,3 +71,30 @@ export function hideModal(element, selector) {
   element.classList.remove(selector);
   document.body.style.overflow = '';
 }
+
+export function postData(form, message) {
+  form.addEventListener('submit', (event) => {
+    event.preventDefault();
+
+    const statusMessage = document.createElement('div');
+    statusMessage.classList.add('status');
+    statusMessage.textContent = message.loading;
+    form.append(statusMessage);
+
+    const request = new XMLHttpRequest();
+    request.open('POST', 'server.php');
+
+    const formData = new FormData(form);
+
+    request.send(formData);
+
+    request.addEventListener('load', () => {
+      if (request.status === 200) {
+        console.log(request.response);
+        statusMessage.textContent = message.success;
+      } else {
+        statusMessage.textContent = message.failure;
+      }
+    });
+  });
+}

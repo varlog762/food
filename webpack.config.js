@@ -42,6 +42,10 @@ const plugins = () => {
                     from: 'img/tabs/*.jpg',
                     to: 'img/tabs/[name][ext]',
                 },
+                {
+                    from: '*.php',
+                    to: '[name][ext]',
+                },
             ]
         }),
         new MiniCssExtractPlugin({
