@@ -37,7 +37,6 @@ export default class PlanCard {
 
   insertCardElementToPage(parentContainer) {
     const elem = this.createCardElement();
-    console.log('i\'m a class');
     parentContainer.append(elem);
   }
 }
