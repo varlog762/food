@@ -12,6 +12,9 @@
         max-width: 500px;
         margin: 40px auto;
     }
+    &__dialog_hide {
+        display: none;
+    }
     &__content {
         position: relative;
         width: 100%;

@@ -2,6 +2,16 @@
 /* eslint-disable no-use-before-define */
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-return-assign */
+const HTTP_STATUS_OK = 200;
+const TWO_SEC = 2000;
+const HOURS_IN_DAY = 24;
+const MS_PER_DAY = 8640000;
+const MS_PER_HOUR = 360000;
+const MS_PER_MINUTE = 60000;
+const MS_PER_SECOND = 1000;
+
+const modal = document.querySelector('.modal');
+
 export function hideTabContenet(collection) {
   collection.forEach((item) => item.classList.remove('tabcontent_active'));
   collection.forEach((item) => item.classList.remove('tabcontent_animation'));
@@ -22,10 +32,10 @@ export function addTabActive(collection, idx = 0) {
 
 export function getTimeRemaning(deadLine) {
   const timeLeft = Date.parse(deadLine) - Date.parse(new Date());
-  const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
-  const hours = Math.floor((timeLeft / (1000 * 60 * 60)) % 24);
-  const minutes = Math.floor((timeLeft / 1000 / 60) % 60);
-  const seconds = Math.floor((timeLeft / 1000) % 60);
+  const days = Math.floor(timeLeft / MS_PER_DAY);
+  const hours = Math.floor((timeLeft / MS_PER_HOUR) % HOURS_IN_DAY);
+  const minutes = Math.floor((timeLeft / MS_PER_MINUTE) % HOURS_IN_DAY);
+  const seconds = Math.floor((timeLeft / MS_PER_SECOND) % HOURS_IN_DAY);
 
   return {
     total: timeLeft,
@@ -76,11 +86,6 @@ export function postData(form, message) {
   form.addEventListener('submit', (event) => {
     event.preventDefault();
 
-    const statusMessage = document.createElement('div');
-    statusMessage.classList.add('status');
-    statusMessage.textContent = message.loading;
-    form.append(statusMessage);
-
     const request = new XMLHttpRequest();
     request.open('POST', 'server.php');
     request.setRequestHeader('Content-type', 'application/json');
@@ -94,15 +99,12 @@ export function postData(form, message) {
     request.send(json);
 
     request.addEventListener('load', () => {
-      if (request.status === 200) {
+      if (request.status === HTTP_STATUS_OK) {
         console.log(request.response);
-        statusMessage.textContent = message.success;
         form.reset();
-        setTimeout(() => {
-          statusMessage.remove();
-        }, 2000);
+        showThanksModal(message.success);
       } else {
-        statusMessage.textContent = message.failure;
+        showThanksModal(message.failure);
       }
     });
   });
@@ -110,7 +112,7 @@ export function postData(form, message) {
 
 function showThanksModal(content) {
   const prevModalDialog = document.querySelector('.modal__dialog');
-  prevModalDialog.classList.add('hide');
+  prevModalDialog.classList.add('modal__dialog_hide');
 
   const thanksModal = document.createElement('div');
   thanksModal.classList.add('modal__dialog');
@@ -120,4 +122,13 @@ function showThanksModal(content) {
       <div class="modal__title">${content}</div>
     </div>
   `;
+
+  modal.append(thanksModal);
+  showModal(modal, 'modal_visible');
+
+  setTimeout(() => {
+    thanksModal.remove();
+    hideModal(modal, 'modal_visible');
+    prevModalDialog.classList.remove('modal__dialog_hide');
+  }, TWO_SEC);
 }
