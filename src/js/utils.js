@@ -107,3 +107,17 @@ export function postData(form, message) {
     });
   });
 }
+
+function showThanksModal(content) {
+  const prevModalDialog = document.querySelector('.modal__dialog');
+  prevModalDialog.classList.add('hide');
+
+  const thanksModal = document.createElement('div');
+  thanksModal.classList.add('modal__dialog');
+  thanksModal.innerHTML = `
+    <div class="modal__content">
+      <div class="modal__close" data-modal-close>&times;</div>
+      <div class="modal__title">${content}</div>
+    </div>
+  `;
+}
