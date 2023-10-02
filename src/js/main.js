@@ -13,6 +13,8 @@ import {
 } from './utils';
 import PlanCard from './PlanCard';
 
+const TIMER_50_SEC = 50000;
+
 document.addEventListener('DOMContentLoaded', () => {
   // Tabs elements:
   const tabContainer = document.querySelector('.tabcontainer');
@@ -20,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const tabsContent = tabContainer.querySelectorAll('.tabcontent');
   // Modal elements:
   const modal = document.querySelector('.modal');
-  const showModalTimerInt = setTimeout(showModal, 15000, modal, 'modal_visible');
+  const showModalTimerInt = setTimeout(showModal, TIMER_50_SEC, modal, 'modal_visible');
   const showModalOnScroll = () => {
     if (window.pageYOffset + document.documentElement.clientHeight >= document.documentElement.scrollHeight) {
       showModal(modal, 'modal_visible');
@@ -50,10 +52,10 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // Timer:
-  // const now = new Date();
-  // const deadLineMS = now.getTime() + 864000000;
-  // const deadLine = new Date(deadLineMS);
-  const deadLine = new Date('2023-08-31T06:00:00.000Z');
+  const now = new Date();
+  const deadLineMS = now.getTime() + 864000000;
+  const deadLine = new Date(deadLineMS);
+
   setClock('.timer', deadLine);
 
   // Modal:
@@ -84,7 +86,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const forms = document.querySelectorAll('form');
 
   const message = {
-    loading: 'Загрузка',
+    loading: 'icons/spinner.svg',
     success: 'Спасибо! Скоро мы с Вами свяжемся.',
     failure: 'Что-то пошло не так...',
   };

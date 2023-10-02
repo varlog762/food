@@ -2,11 +2,12 @@
 /* eslint-disable no-use-before-define */
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-return-assign */
-const HTTP_STATUS_OK = 200;
 const TWO_SEC = 2000;
 const HOURS_IN_DAY = 24;
-const MS_PER_DAY = 8640000;
-const MS_PER_HOUR = 360000;
+const MINUTES_IN_HOUR = 60;
+const SECONDS_IN_MINUTE = 60;
+const MS_PER_DAY = 86400000;
+const MS_PER_HOUR = 3600000;
 const MS_PER_MINUTE = 60000;
 const MS_PER_SECOND = 1000;
 
@@ -34,8 +35,8 @@ export function getTimeRemaning(deadLine) {
   const timeLeft = Date.parse(deadLine) - Date.parse(new Date());
   const days = Math.floor(timeLeft / MS_PER_DAY);
   const hours = Math.floor((timeLeft / MS_PER_HOUR) % HOURS_IN_DAY);
-  const minutes = Math.floor((timeLeft / MS_PER_MINUTE) % HOURS_IN_DAY);
-  const seconds = Math.floor((timeLeft / MS_PER_SECOND) % HOURS_IN_DAY);
+  const minutes = Math.floor((timeLeft / MS_PER_MINUTE) % MINUTES_IN_HOUR);
+  const seconds = Math.floor((timeLeft / MS_PER_SECOND) % SECONDS_IN_MINUTE);
 
   return {
     total: timeLeft,
@@ -86,27 +87,38 @@ export function postData(form, message) {
   form.addEventListener('submit', (event) => {
     event.preventDefault();
 
-    const request = new XMLHttpRequest();
-    request.open('POST', 'server.php');
-    request.setRequestHeader('Content-type', 'application/json');
+    const statusMessage = document.createElement('img');
+    statusMessage.src = message.loading;
+    statusMessage.style.cssText = `
+      display: block;
+      margin: 0 auto;
+      padding-top: 10px;
+    `;
+    form.insertAdjacentElement('afterend', statusMessage);
 
     const formData = new FormData(form);
 
     const object = {};
     formData.forEach((value, key) => object[key] = value);
-    const json = JSON.stringify(object);
 
-    request.send(json);
-
-    request.addEventListener('load', () => {
-      if (request.status === HTTP_STATUS_OK) {
-        console.log(request.response);
+    fetch('server.php', {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json',
+      },
+      body: JSON.stringify(object),
+    }).then((data) => {
+      data.text();
+    }).then((data) => {
+      console.log(data);
+      showThanksModal(message.success);
+      statusMessage.remove();
+    }).catch(() => {
+      showThanksModal(message.failure);
+    })
+      .finally(() => {
         form.reset();
-        showThanksModal(message.success);
-      } else {
-        showThanksModal(message.failure);
-      }
-    });
+      });
   });
 }
 

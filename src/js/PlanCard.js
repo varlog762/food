@@ -13,10 +13,11 @@ export default class PlanCard {
   changeToBYN() {
     this.price = Math.floor(this.price * this.transfer);
   }
+
   createCardElement() {
     const cardElement = document.createElement('div');
 
-    if (this.classes.length){
+    if (this.classes.length) {
       this.classes.forEach((item) => cardElement.classList.add(item));
     } else {
       cardElement.classList.add('menu__item');
@@ -31,7 +32,7 @@ export default class PlanCard {
       <div class="menu__item-cost">Цена:</div>
       <div class="menu__item-total"><span>${this.price}</span> руб/день</div>
     </div>`;
-    
+
     return cardElement;
   }
 
