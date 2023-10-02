@@ -83,7 +83,7 @@ export function hideModal(element, selector) {
   document.body.style.overflow = '';
 }
 
-export function postData(form, message) {
+export function bindPostData(form, message) {
   form.addEventListener('submit', (event) => {
     event.preventDefault();
 

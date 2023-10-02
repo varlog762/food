@@ -9,7 +9,7 @@ import {
   setClock,
   showModal,
   hideModal,
-  postData,
+  bindPostData,
 } from './utils';
 import PlanCard from './PlanCard';
 
@@ -91,9 +91,9 @@ document.addEventListener('DOMContentLoaded', () => {
     failure: 'Что-то пошло не так...',
   };
 
-  forms.forEach((form) => postData(form, message));
+  forms.forEach((form) => bindPostData(form, message));
 
-  fetch('db.json')
+  fetch('http://localhost:3000/menu')
     .then((data) => data.json())
     .then((res) => console.log(res));
 });
