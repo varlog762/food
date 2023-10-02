@@ -83,6 +83,18 @@ export function hideModal(element, selector) {
   document.body.style.overflow = '';
 }
 
+async function getResource(url) {
+  const res = await fetch(url);
+
+  if (!res.ok) {
+    throw new Error(`Could not fetch ${url}, status: ${res.status}`);
+  }
+
+  const result = await res.json();
+
+  return result;
+}
+
 async function postData(url, data) {
   const res = await fetch(url, {
     method: 'POST',
@@ -112,18 +124,9 @@ export function bindPostData(form, message) {
 
     const formData = new FormData(form);
 
-    const object = {};
-    formData.forEach((value, key) => object[key] = value);
+    const json = JSON.stringify(Object.fromEntries(formData.entries()));
 
-    fetch('server.php', {
-      method: 'POST',
-      headers: {
-        'Content-type': 'application/json',
-      },
-      body: JSON.stringify(object),
-    }).then((data) => {
-      data.text();
-    }).then((data) => {
+    postData('http://localhost:3000/requests', json).then((data) => {
       console.log(data);
       showThanksModal(message.success);
       statusMessage.remove();
