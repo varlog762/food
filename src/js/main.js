@@ -92,4 +92,8 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   forms.forEach((form) => postData(form, message));
+
+  fetch('db.json')
+    .then((data) => data.json())
+    .then((res) => console.log(res));
 });

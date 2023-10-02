@@ -46,6 +46,10 @@ const plugins = () => {
                     from: '*.php',
                     to: '[name][ext]',
                 },
+                {
+                    from: '*.json',
+                    to: '[name][ext]',
+                },
             ]
         }),
         new MiniCssExtractPlugin({
