@@ -83,6 +83,20 @@ export function hideModal(element, selector) {
   document.body.style.overflow = '';
 }
 
+async function postData(url, data) {
+  const res = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-type': 'application/json',
+    },
+    body: data,
+  });
+
+  const result = await res.json();
+
+  return result;
+}
+
 export function bindPostData(form, message) {
   form.addEventListener('submit', (event) => {
     event.preventDefault();
